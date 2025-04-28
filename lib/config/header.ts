@@ -23,6 +23,7 @@ export const headerConfig: HeaderConfig = {
   navigationLinks: [
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
+    { href: "/gallery", label: "Gallery" },
     { href: "/events", label: "Events" },
     { href: "/projects", label: "Projects" },
     { href: "/team", label: "Team" },
