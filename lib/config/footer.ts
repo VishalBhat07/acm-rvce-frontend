@@ -26,7 +26,7 @@ export const footerConfig: FooterConfig = {
   brand: {
     title: "ACM RVCE",
     description: "Association for Computing Machinery - RVCE Student Chapter",
-    logoSrc: "/logos/acm-logo.webp" 
+    logoSrc: "/logos/ACM_transparent_bg.png" 
   },
   sections: [
     {
@@ -34,9 +34,9 @@ export const footerConfig: FooterConfig = {
       links: [
         { href: "/", label: "Home" },
         { href: "/blog", label: "Blog" },
+        { href: "/team", label: "Team" },
         { href: "/events", label: "Events" },
         { href: "/projects", label: "Projects" },
-        { href: "/team", label: "Team" },
         { href: "/about", label: "About" },
         { href: "/contact", label: "Contact" }
       ]
