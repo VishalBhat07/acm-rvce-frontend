@@ -2,7 +2,8 @@ import SupaAuthVerifyEmail from "@/emails";
 import supabaseAdmin from "@/lib/supabase/admin";
 
 import { Resend } from "resend";
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("jehbuhbjehbjhbejhbaekjb"); //dummy API key coz we didnt have .env file
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
 
