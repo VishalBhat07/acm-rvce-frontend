@@ -18,15 +18,15 @@ export interface HeaderConfig {
 export const headerConfig: HeaderConfig = {
   brand: {
     title: "ACM RVCE",
-    icon: "/logos/acm-logo.webp"
+    icon: "/logos/ACM_transparent_bg.png"
   },
   navigationLinks: [
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
     { href: "/gallery", label: "Gallery" },
+    { href: "/team", label: "Team" },
     { href: "/events", label: "Events" },
     { href: "/projects", label: "Projects" },
-    { href: "/team", label: "Team" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" }
   ]
