@@ -51,12 +51,14 @@ export function Header({ config }: HeaderProps) {
       <div className="m-10" />
 
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className="fixed left-0 right-0 top-0 z-40"
       >
         <motion.div
+          initial={{
+            maxWidth: "100%",
+            margin: "0 auto",
+            borderRadius: "0",
+          }}
           animate={{
             maxWidth: isScrolled ? "68rem" : "100%",
             margin: isScrolled ? "1rem auto" : "0 auto",
@@ -67,9 +69,9 @@ export function Header({ config }: HeaderProps) {
             ease: "easeInOut",
           }}
           className={cn(
-            "bg-background/80 border backdrop-blur-xl transition-all duration-500",
+            "bg-background/70 border backdrop-blur-3xl transition-all duration-500",
             isScrolled 
-              ? "bg-background/80 mx-4 md:mx-auto shadow-lg " 
+              ? "bg-background/70 mx-4 md:mx-auto shadow-lg " 
               : "shadow-sm "
           )}
         >
@@ -77,11 +79,11 @@ export function Header({ config }: HeaderProps) {
             <div className={cn(
               "flex items-center justify-between",
               isScrolled 
-                ? "h-20" 
-                : "h-24"
+                ? "h-16" 
+                : "h-20"
             )}>
               <Link href="/" className="group relative flex items-center gap-3">
-                <img src={config.brand.icon} alt={config.brand.title} width={40} height={40} />
+                <Image src={config.brand.icon} alt={config.brand.title} width={40} height={40} />
                 <span className="text-xl font-bold tracking-tight">{config.brand.title}</span>
               </Link>
 
@@ -96,7 +98,7 @@ export function Header({ config }: HeaderProps) {
                             href={item.href}
                             className={cn(
                               "relative flex items-center justify-center rounded-full px-4 py-2 text-sm transition-colors duration-200",
-                              isActive ? "text-primary font-medium" : "text-muted-foreground hover:text-primary"
+                              isActive ? "text-white font-medium" : "text-gray-500 dark:text-gray-300 hover:text-sky-500 dark:hover:text-sky-400"
                             )}
                           >
                             {item.label}
@@ -104,7 +106,7 @@ export function Header({ config }: HeaderProps) {
                           {isActive && (
                             <motion.div
                               layoutId="blob"
-                              className="absolute inset-0 -z-10 rounded-full bg-[rgba(87,169,214,0.6)] dark:bg-[rgba(87,169,214,0.6)] shadow-[0_0_15px_rgba(87,169,214,0.3)] dark:shadow-[0_0_15px_rgba(87,169,214,0.25)]"
+                              className="absolute inset-0 -z-10 rounded-full bg-sky-500"
                               transition={{
                                 type: "spring",
                                 stiffness: 400,
@@ -112,7 +114,6 @@ export function Header({ config }: HeaderProps) {
                                 mass: 1,
                               }}
                             >
-                              <BlobBackground />
                             </motion.div>
                           )}
                         </motion.li>

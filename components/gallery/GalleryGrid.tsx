@@ -2,30 +2,20 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { GalleryItem } from '@/lib/config/gallery';
+import Image from 'next/image';
 
 interface GalleryGridProps {
   items: GalleryItem[];
-  isLoading: boolean;
   onItemClick: (item: GalleryItem) => void;
 }
 
 export default function GalleryGrid({
   items,
-  isLoading,
   onItemClick,
 }: GalleryGridProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 pb-16">
-      {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(9)].map((_, index) => (
-            <div 
-              key={index}
-              className="animate-pulse rounded-lg h-64 bg-gray-200 dark:bg-gray-800"
-            />
-          ))}
-        </div>
-      ) : (
+      {items.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {items.map(item => (
@@ -40,10 +30,12 @@ export default function GalleryGrid({
                 onClick={() => onItemClick(item)}
               >
                 <div className="relative overflow-hidden aspect-video">
-                  <img 
+                  <Image 
                     src={item.src} 
                     alt={item.alt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    width={500}
+                    height={500}
                   />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent 
@@ -77,9 +69,7 @@ export default function GalleryGrid({
             ))}
           </AnimatePresence>
         </div>
-      )}
-      
-      {!isLoading && items.length === 0 && (
+      ) : (
         <div className="text-center py-16">
           <h3 className="text-2xl font-medium mb-2">No gallery items found</h3>
           <p>Try selecting a different category or adjusting your search.</p>

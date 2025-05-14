@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import { categories, galleryItems, GalleryItem, Category } from '@/lib/config/gallery';
 
@@ -11,18 +11,11 @@ import ImageModal from '@/components/gallery/ImageModal';
 
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("View All");
-  const [filteredItems, setFilteredItems] = useState<GalleryItem[]>(galleryItems);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
   
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  
-  useEffect(() => {
+  const filteredItems = useMemo(() => {
     let items = [...galleryItems];
     
     if (selectedCategory !== "View All") {
@@ -36,28 +29,18 @@ export default function Gallery() {
         item.category.toLowerCase().includes(query)
       );
     }
-    
-    setFilteredItems(items);
+    return items;
   }, [selectedCategory, searchQuery]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, [selectedCategory]);
-
-  const openModal = (image: GalleryItem) => {
+  const openModal = useCallback((image: GalleryItem) => {
     setSelectedImage(image);
     document.body.style.overflow = 'hidden';
-  };
+  }, [setSelectedImage]);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedImage(null);
     document.body.style.overflow = 'auto';
-  };
+  }, [setSelectedImage]);
 
   const handlePrevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -81,11 +64,13 @@ export default function Gallery() {
         if (e.key === 'Escape') closeModal();
         if (e.key === 'ArrowLeft') {
           const currentIndex = filteredItems.findIndex(img => img.id === selectedImage.id);
+          if (currentIndex === -1) return;
           const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
           setSelectedImage(filteredItems[prevIndex]);
         }
         if (e.key === 'ArrowRight') {
           const currentIndex = filteredItems.findIndex(img => img.id === selectedImage.id);
+          if (currentIndex === -1) return;
           const nextIndex = (currentIndex + 1) % filteredItems.length;
           setSelectedImage(filteredItems[nextIndex]);
         }
@@ -94,9 +79,7 @@ export default function Gallery() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, filteredItems]);
-
-  if (!mounted) return <div />;
+  }, [selectedImage, filteredItems, closeModal]);
 
   return (
     <div className="w-full">
@@ -113,7 +96,6 @@ export default function Gallery() {
       
       <GalleryGrid
         items={filteredItems}
-        isLoading={isLoading}
         onItemClick={openModal}
       />
       
