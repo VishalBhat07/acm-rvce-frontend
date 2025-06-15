@@ -1,13 +1,13 @@
-# Next.js Supabase Template
+# ACM-RVCE Official Website
 
-A modern full-stack template featuring Next.js 15, Supabase, Shadcn UI, and Tailwind CSS. This template provides a robust starting point for building full-stack applications with authentication and database integration.
+This is the official frontend repository for the ACM-RVCE student chapter website.
 
 ## Tech Stack
 
-- [Next.js 15](https://nextjs.org/) - React framework
-- [Supabase](https://supabase.com/) - Open source Firebase alternative
-- [Shadcn UI](https://ui.shadcn.com/) - Re-usable components built with Radix UI and Tailwind CSS
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Next.js 15](https://nextjs.org/) 
+- [Supabase](https://supabase.com/) 
+- [Shadcn UI](https://ui.shadcn.com/) 
+- [Tailwind CSS](https://tailwindcss.com/) 
 - [TypeScript](https://www.typescriptlang.org/) 
 
 ## Getting Started
@@ -15,20 +15,34 @@ A modern full-stack template featuring Next.js 15, Supabase, Shadcn UI, and Tail
 1. Clone this repository
 2. Install dependencies:
 
-```bash
-npm install
+    ```bash
+    npm install
+    ```
 
-```
+3.  **Set up environment variables**
 
-3. Create a Supabase project and get your credentials
-4. Copy `.env.example` to `.env.local` and fill in your Supabase credentials
-5. Run the development server:
+    - Rename the `env.example` file to `.env`.
+    ```bash
+    cp env.example .env
+    ```
+    - You will need to create accounts and get API keys from the following services:
+        - **Supabase**: Create a project at [supabase.com](https://supabase.com/) to get your Project URL and `anon` key.
+        - **Resend**: Create an account at [resend.com](https://resend.com/) to get an API key for handling emails.
 
-```bash
-npm run dev
-```
+    - Modify your credentials in the `.env` file:
+      ```env
+      NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+      NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+      RESEND_API_KEY=your-resend-api-key
+      ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4.  **Run the development server**
+
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Project Structure
 
@@ -37,17 +51,15 @@ The project follows the Next.js 14 App Router structure:
 - `app/` - Contains all pages and API routes
 - `components/` - Reusable UI components
 - `lib/` - Utility functions and configurations
-- `types/` - TypeScript type definitions
+- `lib/types/` - TypeScript type definitions
+- `lib/config/` - Configuration files
+- `lib/constants/` - Constants
+- `public/` - Static assets
+
 
 ## Learn More
-
-To learn more about the technologies used in this template:
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Supabase Documentation](https://supabase.com/docs)
 - [Shadcn UI Documentation](https://ui.shadcn.com)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new). Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

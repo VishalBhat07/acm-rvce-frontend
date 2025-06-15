@@ -18,7 +18,7 @@ export interface HeaderConfig {
 export const headerConfig: HeaderConfig = {
   brand: {
     title: "ACM RVCE",
-    icon: "/logos/ACM_transparent_bg.png"
+    icon: "/logos/acm-rvce-logo.png"
   },
   navigationLinks: [
     { href: "/", label: "Home" },
