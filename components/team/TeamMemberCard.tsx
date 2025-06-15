@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { TeamMember } from '@/lib/types/team';
 import { socialButtonVariants } from '@/lib/config/animations';
 import { LinkedInIcon, GitHubIcon, EmailIcon } from './SocialIcons';
@@ -10,7 +10,7 @@ interface TeamMemberCardProps {
 }
 
 const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member, index }) => {
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
       opacity: 1,
@@ -18,7 +18,7 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member, index }) => {
       transition: {
         delay: i * 0.1,
         duration: 0.5,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     })
   };

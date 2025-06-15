@@ -8,8 +8,8 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Template',
-  description: 'NextJS Template',
+  title: 'ACM RVCE',
+  description: 'ACM RVCE',
 };
 
 export default function RootLayout({

@@ -1,4 +1,6 @@
-export const cardVariants = {
+import { Variants } from "framer-motion";
+
+export const cardVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
@@ -6,24 +8,24 @@ export const cardVariants = {
     transition: {
       delay: i * 0.1,
       duration: 0.5,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   })
 };
 
-export const socialButtonVariants = {
+export const socialButtonVariants: Variants = {
   rest: { scale: 1 },
   hover: { 
     scale: 1.15,
     transition: { 
-      type: "spring", 
+      type: "spring" as const, 
       stiffness: 400, 
       damping: 10 
     }
   }
 };
 
-export const containerVariants = {
+export const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -34,32 +36,32 @@ export const containerVariants = {
 };
 
 // Contact page animations
-export const fadeInUpVariants = {
+export const fadeInUpVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: { 
-      type: "spring", 
+      type: "spring" as const, 
       stiffness: 300, 
       damping: 15 
     }
   }
 };
 
-export const fadeInStaggerVariants = {
+export const fadeInStaggerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: (i: number) => ({
     opacity: 1,
     transition: {
       delay: i * 0.1,
       duration: 0.6,
-      ease: [0.43, 0.13, 0.23, 0.96]
+      ease: [0.43, 0.13, 0.23, 0.96] as const
     }
   })
 };
 
-export const formFieldVariants = {
+export const formFieldVariants: Variants = {
   hidden: { opacity: 0, x: -20 },
   visible: (i: number) => ({
     opacity: 1,
@@ -67,18 +69,18 @@ export const formFieldVariants = {
     transition: {
       delay: i * 0.05,
       duration: 0.4,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }
   })
 };
 
-export const buttonVariants = {
+export const buttonVariants: Variants = {
   rest: { scale: 1 },
   hover: { 
     scale: 1.03,
     boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.1)",
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 400,
       damping: 10
     }
@@ -86,14 +88,14 @@ export const buttonVariants = {
   tap: { 
     scale: 0.97,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 400,
       damping: 10
     }
   }
 };
 
-export const listItemVariants = {
+export const listItemVariants: Variants = {
   hidden: { opacity: 0, x: -20 },
   visible: (i: number) => ({
     opacity: 1,
@@ -101,12 +103,12 @@ export const listItemVariants = {
     transition: {
       delay: i * 0.1,
       duration: 0.5,
-      ease: [0.43, 0.13, 0.23, 0.96]
+      ease: [0.43, 0.13, 0.23, 0.96] as const
     }
   })
 };
 
-export const imageVariants = {
+export const imageVariants: Variants = {
   hidden: { 
     opacity: 0, 
     scale: 0.8, 
@@ -118,19 +120,19 @@ export const imageVariants = {
     filter: "blur(0px)",
     transition: { 
       duration: 0.8, 
-      ease: [0.43, 0.13, 0.23, 0.96] 
+      ease: [0.43, 0.13, 0.23, 0.96] as const 
     }
   }
 };
 
-export const sectionTitleVariants = {
+export const sectionTitleVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: { 
     opacity: 1, 
     y: 0, 
     scale: 1,
     transition: { 
-      type: "spring", 
+      type: "spring" as const, 
       stiffness: 300, 
       damping: 15 
     }
