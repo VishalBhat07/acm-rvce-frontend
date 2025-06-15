@@ -9,7 +9,7 @@ import TeamCategoryTabs from '@/components/team/TeamCategoryTabs';
 import TeamMembersGrid from '@/components/team/TeamMembersGrid';
 
 const TeamPage: React.FC = () => {
-  const [selectedYear, setSelectedYear] = useState<string>("2024");
+  const [selectedYear, setSelectedYear] = useState<string>("2025");
   const [activeTab, setActiveTab] = useState<"core" | "junior">("core");
   const { theme } = useTheme();
   
