@@ -1,8 +1,8 @@
-import { BlogPost } from "@/lib/config/blog";
 import { BlogCard } from "./blog-card";
+import type { PostsQueryResult } from "@/sanity.types";
 
 interface BlogListProps {
-  posts: BlogPost[];
+  posts: PostsQueryResult;
 }
 
 export function BlogList({ posts }: BlogListProps) {
@@ -13,7 +13,7 @@ export function BlogList({ posts }: BlogListProps) {
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {posts.map((post) => (
-        <BlogCard key={post.slug} post={post} />
+        <BlogCard key={post.slug} post={post as any} />
       ))}
     </div>
   );
