@@ -15,9 +15,11 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-        <main>
+        <main >
             <Header config={headerConfig} />
+            <div className="min-h-screen w-full">
             {children}
+            </div>
             <Footer config={footerConfig} />
         </main>
   )

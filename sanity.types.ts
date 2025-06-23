@@ -13,6 +13,135 @@
  */
 
 // Source: schema.json
+export type Category = {
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  description?: string;
+};
+
+export type Event = {
+  _id: string;
+  _type: "event";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  description?: string;
+  author?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "author";
+  };
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  category?: "Workshop" | "Competition" | "Talk" | "Meetup";
+  tags?: Array<string>;
+  date?: string;
+  venue?: string;
+  registrationLink?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  publishedAt?: string;
+};
+
+export type Project = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  slug?: Slug;
+  author?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "author";
+  };
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  tags?: Array<string>;
+  githubUrl?: string;
+  liveUrl?: string;
+  publishedAt?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
 export type Post = {
   _id: string;
   _type: "post";
@@ -115,17 +244,6 @@ export type Author = {
     _type: "block";
     _key: string;
   }>;
-};
-
-export type Category = {
-  _id: string;
-  _type: "category";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  description?: string;
 };
 
 export type BlockContent = Array<{
@@ -278,7 +396,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Post | Author | Category | BlockContent | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Category | Event | Project | Post | Author | BlockContent | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: postQuery
@@ -361,6 +479,162 @@ export type PostsQueryResult = Array<{
 export type PostSlugsQueryResult = Array<{
   slug: string | null;
 }>;
+// Variable: projectQuery
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    title,    description,    "coverImage": mainImage.asset->url,    "date": publishedAt,    author->{name, "picture": image.asset->url},    "body": body[]{..., _type == "image" => {"url": asset->url}},    "slug": slug.current,    "tags": tags,    githubUrl,    liveUrl  }
+export type ProjectQueryResult = {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  coverImage: string | null;
+  date: string | null;
+  author: {
+    name: string | null;
+    picture: string | null;
+  } | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+    url: string | null;
+  }> | null;
+  slug: string | null;
+  tags: Array<string> | null;
+  githubUrl: string | null;
+  liveUrl: string | null;
+} | null;
+// Variable: moreProjectsQuery
+// Query: *[_type == "project" && _id != $skip && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) [0...$limit] {    title,    "slug": slug.current,    "imageUrl": mainImage.asset->url,    "date": publishedAt,    author->{name, "picture": image.asset->url},    "description": description,    "tags": tags,  }
+export type MoreProjectsQueryResult = Array<{
+  title: string | null;
+  slug: string | null;
+  imageUrl: string | null;
+  date: string | null;
+  author: {
+    name: string | null;
+    picture: string | null;
+  } | null;
+  description: string | null;
+  tags: Array<string> | null;
+}>;
+// Variable: projectsQuery
+// Query: *[_type == "project" && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) {  _id,  title,  description,  "slug": slug.current,  "tags": tags,  "date": publishedAt,  author->{name},  "imageUrl": mainImage.asset->url,}
+export type ProjectsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: string | null;
+  tags: Array<string> | null;
+  date: string | null;
+  author: {
+    name: string | null;
+  } | null;
+  imageUrl: string | null;
+}>;
+// Variable: projectSlugsQuery
+// Query: *[_type == "project" && defined(slug.current)]{ "slug": slug.current }
+export type ProjectSlugsQueryResult = Array<{
+  slug: string | null;
+}>;
+// Variable: eventQuery
+// Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    description,    "slug": slug.current,    author-> {      name,      "picture": picture.asset->url    },    "imageUrl": mainImage.asset->url,    category,    tags,    date,    venue,    registrationLink,    body,    publishedAt  }
+export type EventQueryResult = {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  slug: string | null;
+  author: {
+    name: string | null;
+    picture: null;
+  } | null;
+  imageUrl: string | null;
+  category: "Competition" | "Meetup" | "Talk" | "Workshop" | null;
+  tags: Array<string> | null;
+  date: string | null;
+  venue: string | null;
+  registrationLink: string | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  publishedAt: string | null;
+} | null;
+// Variable: moreEventsQuery
+// Query: *[_type == "event" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {    _id,    title,    "slug": slug.current,    "imageUrl": mainImage.asset->url,    description,    date,    author-> {      name,      "picture": picture.asset->url    }  }
+export type MoreEventsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  imageUrl: string | null;
+  description: string | null;
+  date: string | null;
+  author: {
+    name: string | null;
+    picture: null;
+  } | null;
+}>;
+// Variable: eventsQuery
+// Query: *[_type == "event" && defined(slug.current)] | order(date desc, _updatedAt desc) {    _id,    title,    "slug": slug.current,    "imageUrl": mainImage.asset->url,    description,    tags,    date,    author-> {      name,      "picture": picture.asset->url    },    category,    venue,    registrationLink  }
+export type EventsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  imageUrl: string | null;
+  description: string | null;
+  tags: Array<string> | null;
+  date: string | null;
+  author: {
+    name: string | null;
+    picture: null;
+  } | null;
+  category: "Competition" | "Meetup" | "Talk" | "Workshop" | null;
+  venue: string | null;
+  registrationLink: string | null;
+}>;
+// Variable: eventSlugsQuery
+// Query: *[_type == "event" && defined(slug.current)]{ "slug": slug.current }
+export type EventSlugsQueryResult = Array<{
+  slug: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -370,5 +644,13 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) [0...$limit] {\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    \"date\": publishedAt,\n    author->{name, \"picture\": image.asset->url},\n    \"description\": description,\n    \"tags\": tags,\n  }\n": MoreBlogsQueryResult;
     "\n*[_type == \"post\" && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) {\n  _id,\n  title,\n  description,\n  \"slug\": slug.current,\n  \"tags\": tags,\n  \"date\": publishedAt,\n  author->{name},\n  \"imageUrl\": mainImage.asset->url,\n}": PostsQueryResult;
     "*[_type == \"post\" && defined(slug.current)]{ \"slug\": slug.current }": PostSlugsQueryResult;
+    "\n  *[_type == \"project\" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    \"coverImage\": mainImage.asset->url,\n    \"date\": publishedAt,\n    author->{name, \"picture\": image.asset->url},\n    \"body\": body[]{..., _type == \"image\" => {\"url\": asset->url}},\n    \"slug\": slug.current,\n    \"tags\": tags,\n    githubUrl,\n    liveUrl\n  }\n": ProjectQueryResult;
+    "\n  *[_type == \"project\" && _id != $skip && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) [0...$limit] {\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    \"date\": publishedAt,\n    author->{name, \"picture\": image.asset->url},\n    \"description\": description,\n    \"tags\": tags,\n  }\n": MoreProjectsQueryResult;
+    "\n*[_type == \"project\" && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) {\n  _id,\n  title,\n  description,\n  \"slug\": slug.current,\n  \"tags\": tags,\n  \"date\": publishedAt,\n  author->{name},\n  \"imageUrl\": mainImage.asset->url,\n}": ProjectsQueryResult;
+    "*[_type == \"project\" && defined(slug.current)]{ \"slug\": slug.current }": ProjectSlugsQueryResult;
+    "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    \"slug\": slug.current,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    \"imageUrl\": mainImage.asset->url,\n    category,\n    tags,\n    date,\n    venue,\n    registrationLink,\n    body,\n    publishedAt\n  }\n": EventQueryResult;
+    "\n  *[_type == \"event\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    }\n  }\n": MoreEventsQueryResult;
+    "\n  *[_type == \"event\" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    tags,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    category,\n    venue,\n    registrationLink\n  }\n": EventsQueryResult;
+    "*[_type == \"event\" && defined(slug.current)]{ \"slug\": slug.current }": EventSlugsQueryResult;
   }
 }

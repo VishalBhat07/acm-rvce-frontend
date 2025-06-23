@@ -46,6 +46,14 @@ export default defineConfig({
             route: "/blog/:slug",
             filter: `_type == "post" && slug.current == $slug`,
           },
+          {
+            route: "/projects/:slug",
+            filter: `_type == "project" && slug.current == $slug`,
+          },
+          {
+            route: "/events/:slug",
+            filter: `_type == "event" && slug.current == $slug`,
+          },
         ]),
         locations: {
           settings: defineLocations({
@@ -63,6 +71,36 @@ export default defineConfig({
                 {
                   title: doc?.title || "Untitled",
                   href: resolveHref("post", doc?.slug)!,
+                },
+                homeLocation,
+              ],
+            }),
+          }),
+          project: defineLocations({
+            select: {
+              title: "title",
+              slug: "slug.current",
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || "Untitled",
+                  href: resolveHref("project", doc?.slug)!,
+                },
+                homeLocation,
+              ],
+            }),
+          }),
+          event: defineLocations({
+            select: {
+              title: "title",
+              slug: "slug.current",
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || "Untitled",
+                  href: resolveHref("event", doc?.slug)!,
                 },
                 homeLocation,
               ],

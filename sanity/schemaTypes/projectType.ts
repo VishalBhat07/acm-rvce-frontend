@@ -1,9 +1,9 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-export const postType = defineType({
-  name: 'post',
-  title: 'Post',
+export const projectType = defineType({
+  name: 'project',
+  title: 'Project',
   type: 'document',
   icon: DocumentTextIcon,
   fields: [
@@ -51,6 +51,16 @@ export const postType = defineType({
         options: {
             layout: 'tags'
         }
+    }),
+    defineField({
+        name: 'githubUrl',
+        title: 'GitHub URL',
+        type: 'url',
+    }),
+    defineField({
+        name: 'liveUrl',
+        title: 'Live URL',
+        type: 'url',
     }),
     defineField({
       name: 'publishedAt',

@@ -30,6 +30,10 @@ export function resolveHref(
   switch (documentType) {
     case "post":
       return slug ? `/blog/${slug}` : undefined;
+    case "project":
+      return slug ? `/projects/${slug}` : undefined;
+    case "event":
+      return slug ? `/events/${slug}` : undefined;
     default:
       console.warn("Invalid document type:", documentType);
       return undefined;
