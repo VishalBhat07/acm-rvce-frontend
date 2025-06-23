@@ -54,18 +54,15 @@ export default async function PostPage({ params }: Props) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div className="container max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
       <article>
-        <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-5xl md:leading-none lg:text-6xl">
+        <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-5xl md:leading-none lg:text-5xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
           {post.author?.picture && (
             <Avatar name={post.author.name} src={post.author.picture} />
           )}
-        </div>
-        <div className="mb-8 sm:mx-0 md:mb-16">
-          {post.coverImage && <CoverImage src={post.coverImage} priority />}
         </div>
         <div className="mx-auto max-w-7xl">
           <div className="mb-6 block md:hidden">
@@ -78,6 +75,9 @@ export default async function PostPage({ params }: Props) {
               <DateComponent dateString={post.date} />
             </div>
           </div>
+        </div>
+        <div className="mb-8 sm:mx-0 md:mb-16">
+          {post.coverImage && <CoverImage src={post.coverImage} priority />}
         </div>
         {post.body?.length && (
           <PortableText

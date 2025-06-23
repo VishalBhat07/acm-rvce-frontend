@@ -21,7 +21,7 @@ export default function CoverImage({ src, priority }: CoverImageProps) {
   )
 
   return (
-    <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
+    <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0 rounded-lg ">
       {image}
     </div>
   )
