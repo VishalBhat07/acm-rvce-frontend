@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typegen": "sanity schema extract && sanity typegen generate",
-    "deploy": "npx sanity deploy"
+    "sanity:deploy": "npx sanity deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
