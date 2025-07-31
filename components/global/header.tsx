@@ -83,8 +83,22 @@ export function Header({ config }: HeaderProps) {
                 : "h-20"
             )}>
               <Link href="/" className="group relative flex items-center gap-3">
-                <Image src={config.brand.icon} alt={config.brand.title} width={40} height={40} />
-                <span className="text-xl font-bold tracking-tight">{config.brand.title}</span>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-white rounded-lg shadow-sm dark:bg-white"></div>
+                  <div className="relative bg-white rounded-lg p-2 dark:bg-white">
+                    <Image 
+                      src={config.brand.icon} 
+                      alt={config.brand.title} 
+                      width={36} 
+                      height={36} 
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl font-bold tracking-tight text-primary">{config.brand.title}</span>
+                  <span className="text-sm text-muted-foreground">Student Chapter</span>
+                </div>
               </Link>
 
               <nav className="relative hidden md:block">
