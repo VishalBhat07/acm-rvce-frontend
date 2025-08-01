@@ -1,7 +1,16 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { GalleryItem } from '@/lib/config/gallery';
+
+export interface GalleryItem {
+  id: string
+  src: string
+  alt: string
+  category: string
+  title: string
+  date: string
+  description?: string
+}
 
 interface ImageModalProps {
   selectedImage: GalleryItem | null;

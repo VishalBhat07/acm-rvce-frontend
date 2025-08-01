@@ -8,4 +8,6 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('project').title('Projects'),
       S.documentTypeListItem('event').title('Events'),
       S.documentTypeListItem('author').title('Authors'),
+      S.documentTypeListItem('gallery').title('Gallery'),
+      S.documentTypeListItem('teamMember').title('Team Members'),
     ])

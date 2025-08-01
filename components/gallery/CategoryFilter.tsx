@@ -1,6 +1,6 @@
 "use client";
 
-import { Category } from "@/lib/config/gallery";
+type Category = string;
 
 interface CategoryFilterProps {
   categories: Category[];

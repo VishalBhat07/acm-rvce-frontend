@@ -137,3 +137,55 @@ export const eventsQuery = groq`
 `
 
 export const eventSlugsQuery = groq`*[_type == "event" && defined(slug.current)]{ "slug": slug.current }`
+
+export const galleryItemsQuery = groq`
+  *[_type == "gallery"] | order(date desc, _updatedAt desc) {
+    _id,
+    title,
+    "imageUrl": mainImage.asset->url,
+    description,
+    tags,
+    date,
+    author-> {
+      name,
+      "picture": picture.asset->url
+    },
+    category
+  }
+`
+
+export const teamMembersQuery = groq`
+  *[_type == "teamMember"] | order(year desc, category asc, order asc, name asc) {
+    _id,
+    name,
+    role,
+    "image": image.asset->url,
+    email,
+    linkedin,
+    github,
+    year,
+    category,
+    order
+  }
+`
+
+export const teamMembersByYearQuery = groq`
+  *[_type == "teamMember" && year == $year] | order(category asc, order asc, name asc) {
+    _id,
+    name,
+    role,
+    "image": image.asset->url,
+    email,
+    linkedin,
+    github,
+    year,
+    category,
+    order
+  }
+`
+
+export const teamYearsQuery = groq`
+  *[_type == "teamMember"] {
+    year
+  } | order(year desc)
+`

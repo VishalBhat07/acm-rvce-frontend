@@ -13,6 +13,34 @@
  */
 
 // Source: schema.json
+export type TeamMember = {
+  _id: string;
+  _type: "teamMember";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  role?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  email?: string;
+  linkedin?: string;
+  github?: string;
+  year?: "2024" | "2025" | "2026";
+  category?: "core" | "junior";
+  order?: number;
+};
+
 export type Category = {
   _id: string;
   _type: "category";
@@ -22,6 +50,38 @@ export type Category = {
   title?: string;
   slug?: Slug;
   description?: string;
+};
+
+export type Gallery = {
+  _id: string;
+  _type: "gallery";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  author?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "author";
+  };
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  category?: "Hackathons" | "Workshops" | "Activities" | "Competitions" | "Seminars";
+  tags?: Array<string>;
+  date?: string;
+  publishedAt?: string;
 };
 
 export type Event = {
@@ -396,7 +456,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Category | Event | Project | Post | Author | BlockContent | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = TeamMember | Category | Gallery | Event | Project | Post | Author | BlockContent | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: postQuery
@@ -635,6 +695,54 @@ export type EventsQueryResult = Array<{
 export type EventSlugsQueryResult = Array<{
   slug: string | null;
 }>;
+// Variable: galleryItemsQuery
+// Query: *[_type == "gallery"] | order(date desc, _updatedAt desc) {    _id,    title,    "imageUrl": mainImage.asset->url,    description,    tags,    date,    author-> {      name,      "picture": picture.asset->url    },    category  }
+export type GalleryItemsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  imageUrl: string | null;
+  description: string | null;
+  tags: Array<string> | null;
+  date: string | null;
+  author: {
+    name: string | null;
+    picture: null;
+  } | null;
+  category: "Activities" | "Competitions" | "Hackathons" | "Seminars" | "Workshops" | null;
+}>;
+// Variable: teamMembersQuery
+// Query: *[_type == "teamMember"] | order(year desc, category asc, order asc, name asc) {    _id,    name,    role,    "image": image.asset->url,    email,    linkedin,    github,    year,    category,    order  }
+export type TeamMembersQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  role: string | null;
+  image: string | null;
+  email: string | null;
+  linkedin: string | null;
+  github: string | null;
+  year: "2024" | "2025" | "2026" | null;
+  category: "core" | "junior" | null;
+  order: number | null;
+}>;
+// Variable: teamMembersByYearQuery
+// Query: *[_type == "teamMember" && year == $year] | order(category asc, order asc, name asc) {    _id,    name,    role,    "image": image.asset->url,    email,    linkedin,    github,    year,    category,    order  }
+export type TeamMembersByYearQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  role: string | null;
+  image: string | null;
+  email: string | null;
+  linkedin: string | null;
+  github: string | null;
+  year: "2024" | "2025" | "2026" | null;
+  category: "core" | "junior" | null;
+  order: number | null;
+}>;
+// Variable: teamYearsQuery
+// Query: *[_type == "teamMember"] {    year  } | order(year desc)
+export type TeamYearsQueryResult = Array<{
+  year: "2024" | "2025" | "2026" | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -652,5 +760,9 @@ declare module "@sanity/client" {
     "\n  *[_type == \"event\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    }\n  }\n": MoreEventsQueryResult;
     "\n  *[_type == \"event\" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    tags,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    category,\n    venue,\n    registrationLink\n  }\n": EventsQueryResult;
     "*[_type == \"event\" && defined(slug.current)]{ \"slug\": slug.current }": EventSlugsQueryResult;
+    "\n  *[_type == \"gallery\"] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    tags,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    category\n  }\n": GalleryItemsQueryResult;
+    "\n  *[_type == \"teamMember\"] | order(year desc, category asc, order asc, name asc) {\n    _id,\n    name,\n    role,\n    \"image\": image.asset->url,\n    email,\n    linkedin,\n    github,\n    year,\n    category,\n    order\n  }\n": TeamMembersQueryResult;
+    "\n  *[_type == \"teamMember\" && year == $year] | order(category asc, order asc, name asc) {\n    _id,\n    name,\n    role,\n    \"image\": image.asset->url,\n    email,\n    linkedin,\n    github,\n    year,\n    category,\n    order\n  }\n": TeamMembersByYearQueryResult;
+    "\n  *[_type == \"teamMember\"] {\n    year\n  } | order(year desc)\n": TeamYearsQueryResult;
   }
 }

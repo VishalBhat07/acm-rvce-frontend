@@ -1,41 +1,31 @@
-"use client";
+import { sanityFetch } from '@/sanity/lib/fetch'
+import { teamMembersQuery, teamYearsQuery } from '@/sanity/lib/queries'
+import { TeamMembersQueryResult, TeamYearsQueryResult } from '@/lib/types/team'
+import { TeamPageClient } from '@/components/team/TeamPageClient'
 
-import React, { useState } from 'react';
-import { useTheme } from 'next-themes';
-import { teamData } from '@/lib/config/teamData';
-import TeamHeader from '@/components/team/TeamHeader';
-import TeamYearSelector from '@/components/team/TeamYearSelector';
-import TeamCategoryTabs from '@/components/team/TeamCategoryTabs';
-import TeamMembersGrid from '@/components/team/TeamMembersGrid';
+export const revalidate = 600
 
-const TeamPage: React.FC = () => {
-  const [selectedYear, setSelectedYear] = useState<string>("2025");
-  const [activeTab, setActiveTab] = useState<"core" | "junior">("core");
-  const { theme } = useTheme();
-  
-  const years = Object.keys(teamData).sort();
+export default async function TeamPage() {
+  try {
+    const [teamMembers, teamYearsData] = await Promise.all([
+      sanityFetch({
+        query: teamMembersQuery,
+        stega: false,
+      }) as Promise<TeamMembersQueryResult>,
+      sanityFetch({
+        query: teamYearsQuery,
+        stega: false,
+      }) as Promise<TeamYearsQueryResult>
+    ])
 
-  return (
-    <div className="min-h-screen py-12 pt-20 px-4 sm:px-6 lg:px-8 bg-background text-foreground">
-      <div className="max-w-7xl mx-auto">
-        <TeamHeader />
-        <TeamYearSelector 
-          years={years} 
-          selectedYear={selectedYear} 
-          setSelectedYear={setSelectedYear} 
-        />
-        <TeamCategoryTabs 
-          activeTab={activeTab} 
-          setActiveTab={setActiveTab} 
-        />
-        <TeamMembersGrid 
-          teamData={teamData} 
-          selectedYear={selectedYear} 
-          activeTab={activeTab} 
-        />
-      </div>
-    </div>
-  );
-};
+    const years = teamYearsData && teamYearsData.length > 0 
+      ? [...new Set(teamYearsData.map(item => item.year).filter(Boolean))].sort()
+      : [];
 
-export default TeamPage; 
+    return <TeamPageClient teamMembers={teamMembers || []} years={years} />
+  } catch (error) {
+    console.error('Error fetching team data:', error);
+    // Return with empty data on error
+    return <TeamPageClient teamMembers={[]} years={[]} />
+  }
+} 
