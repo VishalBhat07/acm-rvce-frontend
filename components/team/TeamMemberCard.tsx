@@ -3,6 +3,7 @@ import { motion, Variants } from 'framer-motion';
 import { TeamMember } from '@/lib/types/team';
 import { socialButtonVariants } from '@/lib/config/animations';
 import { LinkedInIcon, GitHubIcon, EmailIcon } from './SocialIcons';
+import Image from 'next/image';
 
 interface TeamMemberCardProps {
   member: TeamMember;
@@ -32,11 +33,19 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member, index }) => {
     >
       <div className="h-56 relative overflow-hidden">
         <div className="w-full h-full relative">
-          <img 
-            src={member.image} 
+          <Image
+            src={member.image}
             alt={member.name}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            style={{ objectFit: 'cover' }}
+            priority
+            className="rounded-t-xl"
           />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+        <div className="absolute bottom-0 left-0 p-4">
+          <span className="text-white text-sm font-semibold">{member.year || '2025'}</span>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
       </div>
