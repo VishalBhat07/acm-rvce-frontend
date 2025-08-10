@@ -1,7 +1,7 @@
 export interface ContactFormField {
   id: string;
   label: string;
-  type: 'text' | 'email' | 'tel' | 'textarea';
+  type: "text" | "email" | "tel" | "textarea";
   placeholder: string;
   required: boolean;
   pattern?: string;
@@ -52,25 +52,18 @@ export interface ContactConfig {
 
 export const contactConfig: ContactConfig = {
   title: "Contact ACM RVCE",
-  description: "Get in touch with the ACM RVCE team for any queries or feedback",
+  description:
+    "Get in touch with the ACM RVCE team for any queries or feedback",
   hero: {
     title: "Contact Us",
     subtitle: "We'd love to hear from you",
-    image: "/images/contact-hero.jpg"
+    image: "/images/contact-hero.jpg",
   },
   form: {
     title: "Send us a message",
-    description: "Got a technical issue? Want to send us feedback about a feature? Need details about any event? Let us know.",
+    description:
+      "Got a technical issue? Want to send us feedback about a feature? Need details about any event? Let us know.",
     fields: [
-      {
-        id: "admissionNumber",
-        label: "Admission Number",
-        type: "text",
-        placeholder: "Enter your admission number",
-        required: true,
-        pattern: "[A-Za-z0-9]{10}",
-        maxLength: 10
-      },
       {
         id: "fullName",
         label: "Full Name",
@@ -78,14 +71,14 @@ export const contactConfig: ContactConfig = {
         placeholder: "Enter your full name",
         required: true,
         minLength: 3,
-        maxLength: 50
+        maxLength: 50,
       },
       {
         id: "email",
         label: "Your email",
         type: "email",
         placeholder: "example@rvce.edu.in",
-        required: true
+        required: true,
       },
       {
         id: "phone",
@@ -93,7 +86,7 @@ export const contactConfig: ContactConfig = {
         type: "tel",
         placeholder: "Enter your phone number",
         required: true,
-        pattern: "[0-9]{10}"
+        pattern: "[0-9]{10}",
       },
       {
         id: "subject",
@@ -102,7 +95,7 @@ export const contactConfig: ContactConfig = {
         placeholder: "How can we help you?",
         required: true,
         minLength: 5,
-        maxLength: 100
+        maxLength: 100,
       },
       {
         id: "message",
@@ -111,14 +104,14 @@ export const contactConfig: ContactConfig = {
         placeholder: "Leave a comment...",
         required: true,
         minLength: 10,
-        maxLength: 500
-      }
+        maxLength: 500,
+      },
     ],
     submitButton: {
-      text: "Send Message"
+      text: "Send Message",
     },
     successMessage: "Thank you! Your message has been sent successfully.",
-    errorMessage: "Oops! Something went wrong. Please try again later."
+    errorMessage: "Oops! Something went wrong. Please try again later.",
   },
   contactInfo: {
     title: "Our Contact Information",
@@ -126,44 +119,39 @@ export const contactConfig: ContactConfig = {
       {
         icon: "MapPin",
         label: "Address",
-        value: "R.V. College of Engineering, Mysore Road, Bengaluru, Karnataka 560059",
-        link: "https://maps.google.com/?q=R.V.+College+of+Engineering,+Mysore+Road,+Bengaluru"
+        value:
+          "R.V. College of Engineering, Mysore Road, Bengaluru, Karnataka 560059",
+        link: "https://maps.google.com/?q=R.V.+College+of+Engineering,+Mysore+Road,+Bengaluru",
       },
       {
         icon: "Mail",
         label: "Email",
         value: "acm@rvce.edu.in",
-        link: "mailto:acm@rvce.edu.in"
+        link: "mailto:acm@rvce.edu.in",
       },
-      {
-        icon: "Phone",
-        label: "Phone",
-        value: "+91 12345 67890",
-        link: "tel:+911234567890"
-      }
-    ]
+    ],
   },
   socialLinks: [
     {
       platform: "LinkedIn",
       url: "https://www.linkedin.com/company/acm-rvce",
-      icon: "Linkedin"
+      icon: "Linkedin",
     },
     {
       platform: "GitHub",
       url: "https://github.com/acm-rvce",
-      icon: "Github"
+      icon: "Github",
     },
     {
       platform: "Instagram",
       url: "https://www.instagram.com/acm_rvce",
-      icon: "Instagram"
-    }
+      icon: "Instagram",
+    },
   ],
   animationSettings: {
     staggerChildren: 0.1,
     listItemDelay: 0.2,
     formFieldsDelay: 0.05,
-    contactInfoDelay: 0.1
-  }
-}; 
+    contactInfoDelay: 0.1,
+  },
+};

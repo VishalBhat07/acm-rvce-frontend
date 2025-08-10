@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { fadeInUpVariants, formFieldVariants } from '@/lib/config/animations';
-import { ContactFormField } from '@/lib/config/contact';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { fadeInUpVariants, formFieldVariants } from "@/lib/config/animations";
+import { ContactFormField } from "@/lib/config/contact";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 interface ContactFormProps {
   fields: ContactFormField[];
@@ -19,42 +19,42 @@ interface ContactFormProps {
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({
-  fields,
+  fields, 
   submitButtonText,
   successMessage,
   errorMessage,
-  className
+  className,
 }) => {
   const [formState, setFormState] = useState<Record<string, string>>({});
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [formStatus, setFormStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
+    setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus('submitting');
-    
+    setFormStatus("submitting");
+
     try {
-      // Simulate form submission with a delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Here you would normally send the form data to your backend
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formState),
-      // });
-      
-      // if (!response.ok) throw new Error('Form submission failed');
-      
-      setFormStatus('success');
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+
+      setFormStatus("success");
       setFormState({});
     } catch (error) {
-      console.error('Form submission error:', error);
-      setFormStatus('error');
+      console.error("Form submission error:", error);
+      setFormStatus("error");
     }
   };
 
@@ -64,14 +64,15 @@ const ContactForm: React.FC<ContactFormProps> = ({
       name: field.id,
       placeholder: field.placeholder,
       required: field.required,
-      value: formState[field.id] || '',
+      value: formState[field.id] || "",
       onChange: handleInputChange,
-      className: 'w-full bg-white/5 dark:bg-black/5 backdrop-blur-sm border-input focus:border-primary rounded-md',
-      'aria-label': field.label,
+      className:
+        "w-full bg-white/5 dark:bg-black/5 backdrop-blur-sm border-input focus:border-primary rounded-md",
+      "aria-label": field.label,
     };
 
     return (
-      <motion.div 
+      <motion.div
         key={field.id}
         className="mb-4"
         variants={formFieldVariants}
@@ -81,14 +82,15 @@ const ContactForm: React.FC<ContactFormProps> = ({
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 300, damping: 15 }}
       >
-        <Label 
+        <Label
           htmlFor={field.id}
           className="block text-sm font-medium mb-1 text-foreground"
         >
-          {field.label} {field.required && <span className="text-destructive">*</span>}
+          {field.label}{" "}
+          {field.required && <span className="text-destructive">*</span>}
         </Label>
-        
-        {field.type === 'textarea' ? (
+
+        {field.type === "textarea" ? (
           <textarea
             {...commonProps}
             rows={5}
@@ -113,14 +115,14 @@ const ContactForm: React.FC<ContactFormProps> = ({
   };
 
   return (
-    <motion.div 
+    <motion.div
       className={cn("w-full", className)}
       variants={fadeInUpVariants}
       initial="hidden"
       animate="visible"
     >
-      {formStatus === 'success' ? (
-        <motion.div 
+      {formStatus === "success" ? (
+        <motion.div
           className="bg-primary-foreground/5 backdrop-blur-sm p-6 rounded-lg border border-primary shadow-md"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -131,7 +133,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             <h3 className="text-xl font-bold text-foreground">Message Sent!</h3>
             <p className="text-muted-foreground">{successMessage}</p>
             <Button
-              onClick={() => setFormStatus('idle')}
+              onClick={() => setFormStatus("idle")}
               variant="outline"
               className="mt-4"
             >
@@ -139,8 +141,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
             </Button>
           </div>
         </motion.div>
-      ) : formStatus === 'error' ? (
-        <motion.div 
+      ) : formStatus === "error" ? (
+        <motion.div
           className="bg-primary-foreground/5 backdrop-blur-sm p-6 rounded-lg border border-destructive shadow-md"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -148,10 +150,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
         >
           <div className="flex flex-col items-center text-center space-y-4">
             <AlertCircle className="w-16 h-16 text-destructive" />
-            <h3 className="text-xl font-bold text-foreground">Submission Error</h3>
+            <h3 className="text-xl font-bold text-foreground">
+              Submission Error
+            </h3>
             <p className="text-muted-foreground">{errorMessage}</p>
             <Button
-              onClick={() => setFormStatus('idle')}
+              onClick={() => setFormStatus("idle")}
               variant="outline"
               className="mt-4"
             >
@@ -160,10 +164,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
           </div>
         </motion.div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-1 p-6 bg-card/60 backdrop-blur-sm border border-border rounded-lg shadow-sm">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-1 p-6 bg-card/60 backdrop-blur-sm border border-border rounded-lg shadow-sm"
+        >
           {fields.map(renderFormControl)}
-          
-          <motion.div 
+
+          <motion.div
             className="pt-4"
             variants={formFieldVariants}
             custom={fields.length}
@@ -176,9 +183,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
               <Button
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
-                disabled={formStatus === 'submitting'}
+                disabled={formStatus === "submitting"}
               >
-                {formStatus === 'submitting' ? 'Sending...' : submitButtonText}
+                {formStatus === "submitting" ? "Sending..." : submitButtonText}
               </Button>
             </motion.div>
           </motion.div>
@@ -188,4 +195,4 @@ const ContactForm: React.FC<ContactFormProps> = ({
   );
 };
 
-export default ContactForm; 
+export default ContactForm;

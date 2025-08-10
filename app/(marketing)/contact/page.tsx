@@ -67,7 +67,7 @@ export default function ContactPage() {
       </section>
       
       {/* Newsletter Signup */}
-      <section className="relative z-10 container mx-auto px-4 py-10 md:py-16 mb-10">
+      {/* <section className="relative z-10 container mx-auto px-4 py-10 md:py-16 mb-10">
         <NewsletterSignup 
           title="Stay Updated with ACM RVCE"
           description="Subscribe to our newsletter for updates on workshops, events, and opportunities."
@@ -75,7 +75,7 @@ export default function ContactPage() {
           placeholderText="example@rvce.edu.in"
           successMessage="You've successfully subscribed to our newsletter. You'll receive updates about our upcoming events and activities."
         />
-      </section>
+      </section> */}
     </main>
   );
 }
