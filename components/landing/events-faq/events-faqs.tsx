@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Tabs from "./Tabs";
-import EventList from "./EventList";
-import FAQList from "./FAQList";
+import Tabs from "./tabs";
+import EventList from "./events-list";
+import FAQList from "./faq-list";
 import { faqs } from "@/lib/config/eventsFAQS";
+import { EventsQueryResult } from "@/sanity.types";
 
 interface EventsAndFAQsProps {
-  events: any[]; // Replace 'any' with your Event type
+  events: EventsQueryResult; 
 }
 
 const EventsAndFAQs: React.FC<EventsAndFAQsProps> = ({ events }) => {

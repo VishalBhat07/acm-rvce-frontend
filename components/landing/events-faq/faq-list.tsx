@@ -1,5 +1,5 @@
 import React from "react";
-import FAQItem from "./FAQItem";
+import FAQItem from "./faq-item";
 import { FAQ } from "@/lib/config/eventsFAQS";
 
 interface FAQListProps {

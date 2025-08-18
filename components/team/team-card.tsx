@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { TeamMember } from '@/lib/types/team';
 import { socialButtonVariants } from '@/lib/config/animations';
-import { LinkedInIcon, GitHubIcon, EmailIcon } from './SocialIcons';
+import { LinkedInIcon, GitHubIcon, EmailIcon } from './social-icons';
 import Image from 'next/image';
 
 interface TeamMemberCardProps {

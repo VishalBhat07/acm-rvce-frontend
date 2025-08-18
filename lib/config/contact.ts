@@ -57,7 +57,7 @@ export const contactConfig: ContactConfig = {
   hero: {
     title: "Contact Us",
     subtitle: "We'd love to hear from you",
-    image: "/images/contact-hero.jpg",
+    image: "/about/about-acm-image.jpg",
   },
   form: {
     title: "Send us a message",

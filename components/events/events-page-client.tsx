@@ -1,9 +1,9 @@
 'use client'
 
 import * as React from 'react'
-import { EventHeader } from '@/components/events/eventHeader'
-import { EventFilter } from '@/components/events/eventFilter'
-import { EventList } from '@/components/events/eventList'
+import { EventHeader } from '@/components/events/events-header'
+import { EventFilter } from '@/components/events/events-filter'
+import { EventList } from '@/components/events/events-list'
 import type { EventsQueryResult } from '@/sanity.types'
 
 const eventConfig = {

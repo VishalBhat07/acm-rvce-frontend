@@ -1,20 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import EventCard from "./EventCard";
-
-interface Event {
-  _id: string;
-  title: string;
-  description: string;
-  image: string;
-  category: string;
-  date: string;
-  slug: string;
-  registrationLink?: string;
-}
+import EventCard from "./event-card";
+import type { EventsQueryResult } from '@/sanity.types';
 
 interface EventListProps {
-  events: Event[];
+  events: EventsQueryResult;
 }
 
 const EventList: React.FC<EventListProps> = ({ events }) => (

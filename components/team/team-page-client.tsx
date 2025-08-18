@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import { useTheme } from 'next-themes';
 import { TeamMember, TeamData } from '@/lib/types/team';
-import TeamHeader from '@/components/team/TeamHeader';
-import TeamYearSelector from '@/components/team/TeamYearSelector';
-import TeamCategoryTabs from '@/components/team/TeamCategoryTabs';
-import TeamMembersGrid from '@/components/team/TeamMembersGrid';
+import TeamHeader from '@/components/team/team-header';
+import TeamYearSelector from '@/components/team/team-selector';
+import TeamCategoryTabs from '@/components/team/tabs';
+import TeamMembersGrid from '@/components/team/team-grid';
 
 interface TeamPageClientProps {
   teamMembers: TeamMember[];

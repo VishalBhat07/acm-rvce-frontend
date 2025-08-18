@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
               <div className="relative bg-white dark:bg-[var(--card)] border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden p-1 shadow-md dark:shadow-[0_4px_15px_rgba(0,0,0,0.1)]">
                 <div className="bg-gray-50 dark:bg-[var(--background)] rounded-lg overflow-hidden">
                   <img 
-                    src="./home/img0.jpg" 
+                    src="/landing/acm-landing.jpg" 
                     alt="ACM RVCE Activities" 
                     className="w-full h-auto rounded-lg transform transition-transform duration-500 hover:scale-105"
                   />

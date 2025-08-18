@@ -1,7 +1,7 @@
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { teamMembersQuery, teamYearsQuery } from '@/sanity/lib/queries'
 import { TeamMembersQueryResult, TeamYearsQueryResult } from '@/lib/types/team'
-import { TeamPageClient } from '@/components/team/TeamPageClient'
+import { TeamPageClient } from '@/components/team/team-page-client'
 
 export const revalidate = 600
 

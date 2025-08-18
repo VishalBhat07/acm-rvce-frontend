@@ -73,7 +73,7 @@ const ContactHero: React.FC<ContactHeroProps> = ({
             <div className="absolute -inset-1 md:-inset-2 bg-gradient-to-tr from-primary/30 to-transparent rounded-2xl transform rotate-2" />
             <div className="absolute inset-0 bg-card/30 backdrop-blur-sm border border-border rounded-2xl overflow-hidden transform -rotate-1 shadow-lg0">
               <Image
-                src={"/gallery/img1.jpg"}
+                src={"/about/about-acm-image.jpg"}
                 alt="Contact"
                 fill
                 className="object-cover object-center"

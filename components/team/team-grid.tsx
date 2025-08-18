@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TeamData } from '@/lib/types/team';
-import TeamMemberCard from './TeamMemberCard';
+import TeamMemberCard from './team-card';
 import { containerVariants } from '@/lib/config/animations';
 
 interface TeamMembersGridProps {

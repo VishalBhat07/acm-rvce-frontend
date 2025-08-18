@@ -11,11 +11,10 @@ const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => (
       <button
         key={tab}
         onClick={() => setActiveTab(tab as "events" | "faqs")}
-        className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-          activeTab === tab
+        className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${activeTab === tab
             ? "bg-[#0466c8] text-white"
             : "bg-gray-100 dark:bg-gray-700 text-[#0466c8] dark:text-white"
-        }`}
+          }`}
       >
         {tab.toUpperCase()}
       </button>
