@@ -45,8 +45,8 @@ export const footerConfig: FooterConfig = {
       title: "Contact",
       links: [
         {
-          href: "mailto:acm.rvce@rvce.edu.in",
-          label: "acm.rvce@rvce.edu.in",
+          href: "mailto:acm@rvce.edu.in",
+          label: "acm@rvce.edu.in",
           icon: "Mail",
         },
         { href: "#", label: "RVCE, Mysore Road, Bengaluru", icon: "MapPin" },
@@ -58,7 +58,7 @@ export const footerConfig: FooterConfig = {
     { href: "#", label: "LinkedIn", icon: "Linkedin" },
     { href: "#", label: "Twitter", icon: "Twitter" },
     { href: "#", label: "Instagram", icon: "Instagram" },
-    { href: "mailto:acm.rvce@rvce.edu.in", label: "Mail", icon: "Mail" },
+    { href: "mailto:acm@rvce.edu.in", label: "Mail", icon: "Mail" },
   ],
   copyright: `Made with ❤️ by ACM RVCE • © ${new Date().getFullYear()}`,
 };
