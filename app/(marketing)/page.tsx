@@ -8,7 +8,7 @@ const Page: React.FC = () => {
     <React.Fragment>
       <Hero />
       <EventsAndFAQs />
-      <Expectations />
+      {/* <Expectations /> */}
     </React.Fragment>
   )
 }
