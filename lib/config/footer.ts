@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin } from "lucide-react"; // Import icons
+// Icons are referenced as strings in the configuration
 
 export interface FooterLink {
   href: string;
@@ -54,10 +54,9 @@ export const footerConfig: FooterConfig = {
     },
   ],
   socialLinks: [
-    { href: "#", label: "GitHub", icon: "Github" },
-    { href: "#", label: "LinkedIn", icon: "Linkedin" },
-    { href: "#", label: "Twitter", icon: "Twitter" },
-    { href: "#", label: "Instagram", icon: "Instagram" },
+    { href: "https://github.com/acmrvce", label: "GitHub", icon: "Github" },
+    { href: "https://www.linkedin.com/company/acmrvce/", label: "LinkedIn", icon: "Linkedin" },
+    { href: "https://www.instagram.com/acm.rvce/", label: "Instagram", icon: "Instagram" },
     { href: "mailto:acm@rvce.edu.in", label: "Mail", icon: "Mail" },
   ],
   copyright: `Made with ❤️ by ACM RVCE • © ${new Date().getFullYear()}`,
