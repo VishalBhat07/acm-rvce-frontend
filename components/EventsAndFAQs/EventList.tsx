@@ -1,7 +1,17 @@
 import React from "react";
-import Link from "next/link"; // Add this import
+import Link from "next/link";
 import EventCard from "./EventCard";
-import { Event } from "@/lib/config/eventsFAQS";
+
+interface Event {
+  _id: string;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  date: string;
+  slug: string;
+  registrationLink?: string;
+}
 
 interface EventListProps {
   events: Event[];
@@ -10,7 +20,7 @@ interface EventListProps {
 const EventList: React.FC<EventListProps> = ({ events }) => (
   <div className="space-y-8">
     {events.map((event, index) => (
-      <EventCard key={index} event={event} delay={index * 100} />
+      <EventCard key={event._id} event={event} delay={index * 100} />
     ))}
 
     <div className="text-center pt-4">

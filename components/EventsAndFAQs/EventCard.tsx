@@ -1,8 +1,18 @@
 import React from "react";
+import Image from "next/image"; // Add this import
 import { Event } from "@/lib/config/eventsFAQS";
 
 interface EventCardProps {
-  event: Event;
+  event: {
+    _id: string;
+    title: string;
+    description: string;
+    image: string;
+    category: string;
+    date: string;
+    slug: string;
+    registrationLink?: string;
+  };
   delay: number;
 }
 
@@ -12,14 +22,17 @@ const EventCard: React.FC<EventCardProps> = ({ event, delay }) => (
     style={{ animationDelay: `${delay}ms` }}
   >
     <div className="sm:w-1/6 flex-shrink-0">
-      <div className="relative rounded-lg overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0466c840] to-[#1282a230] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <img
+      <div className="relative w-full h-[200px] rounded-lg overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0466c840] to-[#1282a230] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+        <Image
           src={event.image}
           alt={event.title}
-          className="w-full h-auto object-cover rounded-lg transform transition-transform duration-500 group-hover:scale-110"
+          fill
+          className="object-cover rounded-lg transform transition-transform duration-500 group-hover:scale-110"
+          sizes="(max-width: 640px) 100vw, 16.666667vw"
+          priority
         />
-        <div className="absolute top-2 right-2 bg-[#0466c8] text-white text-xs font-medium px-2 py-1 rounded-md">
+        <div className="absolute top-2 right-2 bg-[#0466c8] text-white text-xs font-medium px-2 py-1 rounded-md z-20">
           {event.category}
         </div>
       </div>

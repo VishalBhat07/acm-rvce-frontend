@@ -136,6 +136,21 @@ export const eventsQuery = groq`
   }
 `
 
+// ...existing code...
+
+export const topEventsQuery = groq`
+  *[_type == "event" && defined(slug.current)] | order(date desc) [0...4] {
+    _id,
+    title,
+    "slug": slug.current,
+    "imageUrl": mainImage.asset->url,
+    description,
+    date,
+    category,
+    registrationLink
+  }
+`
+
 export const eventSlugsQuery = groq`*[_type == "event" && defined(slug.current)]{ "slug": slug.current }`
 
 export const galleryItemsQuery = groq`

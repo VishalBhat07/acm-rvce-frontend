@@ -4,9 +4,13 @@ import React, { useState } from "react";
 import Tabs from "./Tabs";
 import EventList from "./EventList";
 import FAQList from "./FAQList";
-import { events, faqs } from "@/lib/config/eventsFAQS";
+import { faqs } from "@/lib/config/eventsFAQS";
 
-const EventsAndFAQs: React.FC = () => {
+interface EventsAndFAQsProps {
+  events: any[]; // Replace 'any' with your Event type
+}
+
+const EventsAndFAQs: React.FC<EventsAndFAQsProps> = ({ events }) => {
   const [activeTab, setActiveTab] = useState<"events" | "faqs">("events");
   const [openFAQIndex, setOpenFAQIndex] = useState<number | null>(0);
 
@@ -18,7 +22,11 @@ const EventsAndFAQs: React.FC = () => {
         {activeTab === "events" ? (
           <EventList events={events} />
         ) : (
-          <FAQList faqs={faqs} openFAQIndex={openFAQIndex} setOpenFAQIndex={setOpenFAQIndex} />
+          <FAQList
+            faqs={faqs}
+            openFAQIndex={openFAQIndex}
+            setOpenFAQIndex={setOpenFAQIndex}
+          />
         )}
       </div>
     </div>
