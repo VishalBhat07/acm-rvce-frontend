@@ -1,4 +1,4 @@
-import { groq } from 'next-sanity'
+import { groq } from "next-sanity";
 
 export const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
@@ -12,7 +12,7 @@ export const postQuery = groq`
     "slug": slug.current,
     "tags": tags,
   }
-`
+`;
 
 export const moreBlogsQuery = groq`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) [0...$limit] {
@@ -24,7 +24,7 @@ export const moreBlogsQuery = groq`
     "description": description,
     "tags": tags,
   }
-`
+`;
 
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) {
@@ -36,9 +36,9 @@ export const postsQuery = groq`
   "date": publishedAt,
   author->{name},
   "imageUrl": mainImage.asset->url,
-}`
+}`;
 
-export const postSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`
+export const postSlugsQuery = groq`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`;
 
 export const projectQuery = groq`
   *[_type == "project" && slug.current == $slug][0] {
@@ -54,7 +54,7 @@ export const projectQuery = groq`
     githubUrl,
     liveUrl
   }
-`
+`;
 
 export const moreProjectsQuery = groq`
   *[_type == "project" && _id != $skip && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) [0...$limit] {
@@ -66,7 +66,7 @@ export const moreProjectsQuery = groq`
     "description": description,
     "tags": tags,
   }
-`
+`;
 
 export const projectsQuery = groq`
 *[_type == "project" && defined(slug.current)] | order(publishedAt desc, _updatedAt desc) {
@@ -78,9 +78,9 @@ export const projectsQuery = groq`
   "date": publishedAt,
   author->{name},
   "imageUrl": mainImage.asset->url,
-}`
+}`;
 
-export const projectSlugsQuery = groq`*[_type == "project" && defined(slug.current)]{ "slug": slug.current }`
+export const projectSlugsQuery = groq`*[_type == "project" && defined(slug.current)]{ "slug": slug.current }`;
 export const eventQuery = groq`
   *[_type == "event" && slug.current == $slug][0] {
     _id,
@@ -91,7 +91,8 @@ export const eventQuery = groq`
       name,
       "picture": picture.asset->url
     },
-    "imageUrl": mainImage.asset->url,
+    "imageUrl": images[0].asset->url,
+    "images": images[].asset->url,
     category,
     tags,
     date,
@@ -100,14 +101,14 @@ export const eventQuery = groq`
     body,
     publishedAt
   }
-`
+`;
 
 export const moreEventsQuery = groq`
   *[_type == "event" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
     _id,
     title,
     "slug": slug.current,
-    "imageUrl": mainImage.asset->url,
+    "imageUrl": images[0].asset->url,
     description,
     date,
     author-> {
@@ -115,14 +116,14 @@ export const moreEventsQuery = groq`
       "picture": picture.asset->url
     }
   }
-`
+`;
 
 export const eventsQuery = groq`
   *[_type == "event" && defined(slug.current)] | order(date desc, _updatedAt desc) {
     _id,
     title,
     "slug": slug.current,
-    "imageUrl": mainImage.asset->url,
+    "imageUrl": images[0].asset->url,
     description,
     tags,
     date,
@@ -134,7 +135,7 @@ export const eventsQuery = groq`
     venue,
     registrationLink
   }
-`
+`;
 
 // ...existing code...
 
@@ -143,15 +144,15 @@ export const topEventsQuery = groq`
     _id,
     title,
     "slug": slug.current,
-    "imageUrl": mainImage.asset->url,
+    "imageUrl": images[0].asset->url,
     description,
     date,
     category,
     registrationLink
   }
-`
+`;
 
-export const eventSlugsQuery = groq`*[_type == "event" && defined(slug.current)]{ "slug": slug.current }`
+export const eventSlugsQuery = groq`*[_type == "event" && defined(slug.current)]{ "slug": slug.current }`;
 
 export const galleryItemsQuery = groq`
   *[_type == "gallery"] | order(date desc, _updatedAt desc) {
@@ -167,7 +168,7 @@ export const galleryItemsQuery = groq`
     },
     category
   }
-`
+`;
 
 export const teamMembersQuery = groq`
   *[_type == "teamMember"] | order(year desc, category asc, order asc, name asc) {
@@ -182,7 +183,7 @@ export const teamMembersQuery = groq`
     category,
     order
   }
-`
+`;
 
 export const teamMembersByYearQuery = groq`
   *[_type == "teamMember" && year == $year] | order(category asc, order asc, name asc) {
@@ -197,10 +198,10 @@ export const teamMembersByYearQuery = groq`
     category,
     order
   }
-`
+`;
 
 export const teamYearsQuery = groq`
   *[_type == "teamMember"] {
     year
   } | order(year desc)
-`
+`;

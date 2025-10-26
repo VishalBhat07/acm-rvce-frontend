@@ -22,12 +22,13 @@ export const headerConfig: HeaderConfig = {
   },
   navigationLinks: [
     { href: "/", label: "Home" },
-    { href: "/blog", label: "Blog" },
+    { href: "/events", label: "Events" },
     { href: "/gallery", label: "Gallery" },
     { href: "/team", label: "Team" },
-    { href: "/events", label: "Events" },
+    { href: "/blog", label: "Blog" },
     { href: "/projects", label: "Projects" },
     { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" }
+    { href: "/contact", label: "Contact" },
+    { href: "https://github.com/acmrvce", label: "Github" }
   ]
 }
