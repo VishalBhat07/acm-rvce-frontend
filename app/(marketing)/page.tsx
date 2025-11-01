@@ -4,6 +4,7 @@ import EventsAndFAQs from "@/components/landing/events-faq/events-faqs";
 import Expectations from "@/components/expectations/Expectations";
 import { client } from "@/sanity/lib/client";
 import { topEventsQuery } from "@/sanity/lib/queries";
+import { faqs } from "@/lib/config/eventsFAQS";
 
 const Page = async () => {
   const events = await client.fetch(topEventsQuery);
@@ -11,7 +12,7 @@ const Page = async () => {
   return (
     <React.Fragment>
       <Hero />
-      <EventsAndFAQs events={events} />
+      <EventsAndFAQs events={events} faqs={faqs} />
       {/* <Expectations /> */}
     </React.Fragment>
   );

@@ -13,6 +13,13 @@ export const galleryType = defineType({
       validation: (rule: StringRule) => rule.required() 
     }),
     defineField({ 
+      name: 'eventName', 
+      type: 'string',
+      title: 'Event Name',
+      description: 'Name of the event this image belongs to (e.g., "Tech Tank 2024", "AI Workshop Series")',
+      validation: (rule: StringRule) => rule.required() 
+    }),
+    defineField({ 
       name: 'description', 
       type: 'text' 
     }),

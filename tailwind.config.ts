@@ -157,19 +157,39 @@ export default {
   				to: {
   					transform: 'translateY(calc(-100% - var(--gap)))'
   				}
+  			},
+  			aurora: {
+  				from: {
+  					backgroundPosition: '50% 50%, 50% 50%'
+  				},
+  				to: {
+  					backgroundPosition: '350% 50%, 350% 50%'
+  				}
+  			},
+  			spotlight: {
+  				'0%': {
+  					opacity: '0',
+  					transform: 'translate(-72%, -62%) scale(0.5)'
+  				},
+  				'100%': {
+  					opacity: '1',
+  					transform: 'translate(-50%,-40%) scale(1)'
+  				}
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
   			rainbow: 'rainbow var(--speed, 2s) infinite linear',
+  			spotlight: 'spotlight 2s ease .75s 1 forwards',
   			shine: 'shine var(--duration) infinite linear',
   			orbit: 'orbit calc(var(--duration)*1s) linear infinite',
   			'shimmer-slide': 'shimmer-slide var(--speed) ease-in-out infinite alternate',
   			'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear',
   			'shiny-text': 'shiny-text 8s infinite',
   			marquee: 'marquee var(--duration) infinite linear',
-  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
+  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+  			aurora: 'aurora 60s linear infinite'
   		}
   	}
   },

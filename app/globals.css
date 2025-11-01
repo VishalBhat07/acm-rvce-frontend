@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -42,6 +44,11 @@
     --font-serif: Georgia, serif;
     --font-mono: Menlo, monospace;
     --radius: 1.3rem;
+    --color-1: 0 100% 63%;
+    --color-2: 270 100% 63%;
+    --color-3: 210 100% 63%;
+    --color-4: 195 100% 63%;
+    --color-5: 90 100% 63%;
     --shadow-2xs: 0px 2px 0px 0px hsl(202.82 89.12% 53.14% / 0.00);
     --shadow-xs: 0px 2px 0px 0px hsl(202.82 89.12% 53.14% / 0.00);
     --shadow-sm: 0px 2px 0px 0px hsl(202.82 89.12% 53.14% / 0.00), 0px 1px 2px -1px hsl(202.82 89.12% 53.14% / 0.00);
@@ -109,6 +116,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1, h2 {
+    font-family: 'Manrope', sans-serif;
+  }
 }
 
 
@@ -123,5 +133,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@theme inline {
+  --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
+
+  @keyframes rainbow {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 200%;
+    }
   }
 }

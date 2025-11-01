@@ -158,6 +158,7 @@ export const galleryItemsQuery = groq`
   *[_type == "gallery"] | order(date desc, _updatedAt desc) {
     _id,
     title,
+    eventName,
     "imageUrl": mainImage.asset->url,
     description,
     tags,

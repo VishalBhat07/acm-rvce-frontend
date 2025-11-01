@@ -2,8 +2,10 @@
 
 import * as React from 'react'
 import GalleryHeader from '@/components/gallery/GalleryHeader'
-import CategoryFilter from '@/components/gallery/CategoryFilter'
+import CategoryHoverCard, { EventPreview } from '@/components/gallery/CategoryHoverCard'
 import GalleryGrid, { GalleryItem } from '@/components/gallery/GalleryGrid'
+import EventGroup from '@/components/gallery/EventGroup'
+import TimelineView from '@/components/gallery/TimelineView'
 import ImageModal from '@/components/gallery/ImageModal'
 import type { GalleryItemsQueryResult } from '@/sanity.types'
 
@@ -18,11 +20,49 @@ function getAllCategories(galleryItems: GalleryItemsQueryResult) {
   return Array.from(cats).sort()
 }
 
+// Get event previews for a category
+function getEventPreviewsForCategory(
+  galleryItems: GalleryItemsQueryResult, 
+  category: string
+): EventPreview[] {
+  const categoryItems = galleryItems.filter(item => item.category === category)
+  const eventMap = new Map<string, { displayName: string; items: typeof categoryItems; latestDate: Date }>()
+
+  categoryItems.forEach(item => {
+    // Use eventName if available, otherwise use title as fallback
+    const eventName = (item.eventName || item.title || 'Untitled Event') as string
+    const normalizedEventName = eventName.trim().toLowerCase()
+    const date = item.date ? new Date(item.date) : new Date()
+    
+    if (!eventMap.has(normalizedEventName)) {
+      eventMap.set(normalizedEventName, { displayName: eventName.trim(), items: [], latestDate: date })
+    }
+    
+    const eventData = eventMap.get(normalizedEventName)!
+    eventData.items.push(item)
+    if (date > eventData.latestDate) {
+      eventData.latestDate = date
+    }
+  })
+
+  return Array.from(eventMap.values())
+    .sort((a, b) => b.latestDate.getTime() - a.latestDate.getTime())
+    .map((data) => ({
+      eventName: data.displayName,
+      imageCount: data.items.length,
+      latestImage: data.items[0]?.imageUrl,
+      date: data.latestDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    }))
+}
+
 // Convert Sanity data to GalleryItem format
 function convertSanityToGalleryItem(sanityItem: GalleryItemsQueryResult[0]): GalleryItem | null {
   if (!sanityItem.imageUrl || !sanityItem.title || !sanityItem.category) {
     return null
   }
+  
+  // Use title as fallback if eventName is missing (for backward compatibility)
+  const eventName = sanityItem.eventName || sanityItem.title || 'Untitled Event'
   
   return {
     id: sanityItem._id,
@@ -30,6 +70,7 @@ function convertSanityToGalleryItem(sanityItem: GalleryItemsQueryResult[0]): Gal
     alt: sanityItem.title,
     category: sanityItem.category,
     title: sanityItem.title,
+    eventName: eventName,
     date: sanityItem.date ? new Date(sanityItem.date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
@@ -37,6 +78,70 @@ function convertSanityToGalleryItem(sanityItem: GalleryItemsQueryResult[0]): Gal
     }) : '',
     description: sanityItem.description || undefined
   }
+}
+
+// Group items by event name
+function groupByEvent(items: GalleryItem[]): { [eventName: string]: GalleryItem[] } {
+  const grouped: { [eventName: string]: GalleryItem[] } = {}
+
+  
+  items.forEach(item => {
+    // Normalize the event name: trim whitespace and convert to lowercase for grouping
+    const normalizedEventName = item.eventName.trim().toLowerCase()
+    
+    // Find existing group with same normalized name
+    let groupKey = Object.keys(grouped).find(
+      key => key.trim().toLowerCase() === normalizedEventName
+    )
+    
+    // If no group exists, use the current item's event name as the key
+    if (!groupKey) {
+      groupKey = item.eventName.trim()
+      grouped[groupKey] = []
+    }
+    
+    grouped[groupKey].push(item)
+  })
+
+  return grouped
+}
+
+// Group items by month for timeline view
+function groupByMonthTimeline(items: GalleryItem[]) {
+  const monthGroups = new Map<string, { month: string; year: string; events: { [eventName: string]: { category: string; items: GalleryItem[] } } }>()
+
+  items.forEach(item => {
+    const date = new Date(item.date)
+    const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+    const monthName = date.toLocaleDateString('en-US', { month: 'long' })
+    const year = date.getFullYear().toString()
+
+    if (!monthGroups.has(monthYear)) {
+      monthGroups.set(monthYear, { month: monthName, year, events: {} })
+    }
+
+    const monthData = monthGroups.get(monthYear)!
+    const normalizedEventName = item.eventName.trim().toLowerCase()
+    
+    // Find existing event with same normalized name
+    let eventKey = Object.keys(monthData.events).find(
+      key => key.trim().toLowerCase() === normalizedEventName
+    )
+    
+    // If no event exists, use the current item's event name as the key
+    if (!eventKey) {
+      eventKey = item.eventName.trim()
+      monthData.events[eventKey] = { category: item.category, items: [] }
+    }
+
+    monthData.events[eventKey].items.push(item)
+  })
+
+  return Array.from(monthGroups.values()).sort((a, b) => {
+    const dateA = new Date(`${a.month} ${a.year}`)
+    const dateB = new Date(`${b.month} ${b.year}`)
+    return dateB.getTime() - dateA.getTime()
+  })
 }
 
 interface GalleryPageClientProps {
@@ -60,6 +165,17 @@ export function GalleryPageClient({ galleryItems }: GalleryPageClientProps) {
     return ["View All", ...cats]
   }, [galleryItems])
 
+  // Get event previews for each category for hover cards
+  const categoryEventPreviews = React.useMemo(() => {
+    const previews: { [category: string]: EventPreview[] } = {}
+    availableCategories.forEach(category => {
+      if (category !== "View All") {
+        previews[category] = getEventPreviewsForCategory(galleryItems, category)
+      }
+    })
+    return previews
+  }, [galleryItems, availableCategories])
+
   const filteredItems = React.useMemo(() => {
     let items = [...convertedItems]
     
@@ -72,11 +188,16 @@ export function GalleryPageClient({ galleryItems }: GalleryPageClientProps) {
       items = items.filter(item => 
         item.title.toLowerCase().includes(query) || 
         item.category.toLowerCase().includes(query) ||
+        item.eventName.toLowerCase().includes(query) ||
         (item.description && item.description.toLowerCase().includes(query))
       )
     }
     return items
   }, [convertedItems, selectedCategory, searchQuery])
+
+  // Group items for display
+  const groupedByEvent = React.useMemo(() => groupByEvent(filteredItems), [filteredItems])
+  const timelineGroups = React.useMemo(() => groupByMonthTimeline(filteredItems), [filteredItems])
 
   const openModal = React.useCallback((image: GalleryItem) => {
     setSelectedImage(image)
@@ -134,16 +255,42 @@ export function GalleryPageClient({ galleryItems }: GalleryPageClientProps) {
         onSearchChange={setSearchQuery}
       />
       
-      <CategoryFilter
-        categories={availableCategories}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
+      {/* Category Filter with Hover Cards */}
+      <div className="flex flex-wrap justify-center gap-2 mb-10">
+        {availableCategories.map(category => (
+          <CategoryHoverCard
+            key={category}
+            category={category}
+            events={categoryEventPreviews[category] || []}
+            isSelected={selectedCategory === category}
+            onClick={() => setSelectedCategory(category)}
+          />
+        ))}
+      </div>
       
-      <GalleryGrid
-        items={filteredItems}
-        onItemClick={openModal}
-      />
+      {/* Display Logic */}
+      {selectedCategory === "View All" ? (
+        // Timeline View
+        <TimelineView monthGroups={timelineGroups} onItemClick={openModal} />
+      ) : (
+        // Event-Grouped View for specific category
+        <div className="max-w-7xl mx-auto px-4">
+          {Object.entries(groupedByEvent)
+            .sort(([, a], [, b]) => {
+              const dateA = new Date(a[0]?.date || 0)
+              const dateB = new Date(b[0]?.date || 0)
+              return dateB.getTime() - dateA.getTime()
+            })
+            .map(([eventName, items]) => (
+              <EventGroup
+                key={eventName}
+                eventName={eventName}
+                items={items}
+                onItemClick={openModal}
+              />
+            ))}
+        </div>
+      )}
       
       <ImageModal
         selectedImage={selectedImage}
