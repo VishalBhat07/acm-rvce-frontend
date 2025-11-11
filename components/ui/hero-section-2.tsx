@@ -108,7 +108,7 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
         />
 
         {/* Left Side: Content */}
-        <div className="flex w-full flex-col justify-between p-8 md:w-1/2 md:p-12 lg:w-3/5 lg:p-16 relative z-10 mt-20">
+        <div className="flex w-full flex-col justify-start gap-y-6 p-6 md:w-1/2 md:p-12 lg:w-3/5 lg:p-16 relative z-10 md:mt-20 mt-16">
             {/* Top Section: Logo & Main Content */}
             <div>
 
@@ -116,7 +116,7 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
                     <motion.h1 className="text-4xl font-bold leading-tight bg-opacity-50 bg-gradient-to-b from-gray-900 to-gray-600 dark:from-neutral-50 dark:to-neutral-400 bg-clip-text text-transparent md:text-6xl" variants={itemVariants}>
                         {title}
                     </motion.h1>
-                    <motion.p className="my-8 max-w-md text-base text-gray-700 dark:text-neutral-300" variants={itemVariants}>
+          <motion.p className="my-6 md:my-8 max-w-md text-base text-gray-700 dark:text-neutral-300" variants={itemVariants}>
                         {subtitle}
                     </motion.p>
                     <motion.div variants={itemVariants}>
@@ -130,7 +130,7 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
             </div>
 
             {/* Bottom Section: Footer Info */}
-            <motion.footer className="mt-12 w-full" variants={itemVariants}>
+      <motion.footer className="mt-4 md:mt-12 w-full" variants={itemVariants}>
                 <div className="grid grid-cols-1 gap-6 text-xs text-gray-600 dark:text-neutral-400 sm:grid-cols-3">
                     <div className="flex items-center">
                         <InfoIcon type="website" />

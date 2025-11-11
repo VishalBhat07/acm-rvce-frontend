@@ -934,6 +934,7 @@ export function Header() {
           </div>
           <div className="flex flex-col">
             <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">{config.brand.title}</span>
+            <span className="text-sm text-slate-900 dark:text-white">{config.brand.subtitle}</span>
           </div>
         </a>
         <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block">

@@ -10,6 +10,7 @@ export interface HeaderLink {
 export interface HeaderConfig {
   brand: {
     title: string
+    subtitle: string,
     icon: string
   }
   navigationLinks: HeaderLink[]
@@ -18,6 +19,7 @@ export interface HeaderConfig {
 export const headerConfig: HeaderConfig = {
   brand: {
     title: "ACM RVCE",
+    subtitle: "Student Chapter",
     icon: "/logos/acm-rvce-logo.png"
   },
   navigationLinks: [
@@ -29,6 +31,5 @@ export const headerConfig: HeaderConfig = {
     { href: "/projects", label: "Projects" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
-    { href: "https://github.com/acmrvce", label: "Github" }
   ]
 }

@@ -46,9 +46,4 @@ export const acmSectionConfig = {
       "Tech Talks and Workshops",
     ],
   },
-  stats: [
-    { value: "100+", label: "Events" },
-    { value: "500+", label: "Members" },
-    { value: "50+", label: "Workshops" },
-  ],
 }; 
