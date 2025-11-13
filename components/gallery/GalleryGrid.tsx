@@ -9,6 +9,7 @@ export interface GalleryItem {
   alt: string
   category: string
   title: string
+  eventName: string
   date: string
   description?: string
 }

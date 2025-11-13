@@ -59,6 +59,7 @@ export type Gallery = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  eventName?: string;
   description?: string;
   author?: {
     _ref: string;
@@ -690,16 +691,29 @@ export type EventsQueryResult = Array<{
   venue: string | null;
   registrationLink: string | null;
 }>;
+// Variable: topEventsQuery
+// Query: *[_type == "event" && defined(slug.current)] | order(date desc) [0...4] {    _id,    title,    "slug": slug.current,    "imageUrl": mainImage.asset->url,    description,    date,    category,    registrationLink  }
+export type TopEventsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  imageUrl: string | null;
+  description: string | null;
+  date: string | null;
+  category: "Competition" | "Meetup" | "Talk" | "Workshop" | null;
+  registrationLink: string | null;
+}>;
 // Variable: eventSlugsQuery
 // Query: *[_type == "event" && defined(slug.current)]{ "slug": slug.current }
 export type EventSlugsQueryResult = Array<{
   slug: string | null;
 }>;
 // Variable: galleryItemsQuery
-// Query: *[_type == "gallery"] | order(date desc, _updatedAt desc) {    _id,    title,    "imageUrl": mainImage.asset->url,    description,    tags,    date,    author-> {      name,      "picture": picture.asset->url    },    category  }
+// Query: *[_type == "gallery"] | order(date desc, _updatedAt desc) {    _id,    title,    eventName,    "imageUrl": mainImage.asset->url,    description,    tags,    date,    author-> {      name,      "picture": picture.asset->url    },    category  }
 export type GalleryItemsQueryResult = Array<{
   _id: string;
   title: string | null;
+  eventName: string | null;
   imageUrl: string | null;
   description: string | null;
   tags: Array<string> | null;
@@ -759,8 +773,9 @@ declare module "@sanity/client" {
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    description,\n    \"slug\": slug.current,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    \"imageUrl\": mainImage.asset->url,\n    category,\n    tags,\n    date,\n    venue,\n    registrationLink,\n    body,\n    publishedAt\n  }\n": EventQueryResult;
     "\n  *[_type == \"event\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    }\n  }\n": MoreEventsQueryResult;
     "\n  *[_type == \"event\" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    tags,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    category,\n    venue,\n    registrationLink\n  }\n": EventsQueryResult;
+    "\n  *[_type == \"event\" && defined(slug.current)] | order(date desc) [0...4] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    date,\n    category,\n    registrationLink\n  }\n": TopEventsQueryResult;
     "*[_type == \"event\" && defined(slug.current)]{ \"slug\": slug.current }": EventSlugsQueryResult;
-    "\n  *[_type == \"gallery\"] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    tags,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    category\n  }\n": GalleryItemsQueryResult;
+    "\n  *[_type == \"gallery\"] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    eventName,\n    \"imageUrl\": mainImage.asset->url,\n    description,\n    tags,\n    date,\n    author-> {\n      name,\n      \"picture\": picture.asset->url\n    },\n    category\n  }\n": GalleryItemsQueryResult;
     "\n  *[_type == \"teamMember\"] | order(year desc, category asc, order asc, name asc) {\n    _id,\n    name,\n    role,\n    \"image\": image.asset->url,\n    email,\n    linkedin,\n    github,\n    year,\n    category,\n    order\n  }\n": TeamMembersQueryResult;
     "\n  *[_type == \"teamMember\" && year == $year] | order(category asc, order asc, name asc) {\n    _id,\n    name,\n    role,\n    \"image\": image.asset->url,\n    email,\n    linkedin,\n    github,\n    year,\n    category,\n    order\n  }\n": TeamMembersByYearQueryResult;
     "\n  *[_type == \"teamMember\"] {\n    year\n  } | order(year desc)\n": TeamYearsQueryResult;
