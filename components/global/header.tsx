@@ -8,6 +8,8 @@ import { useTheme } from "next-themes";
 import { gsap } from 'gsap';
 import { Sun, Moon } from "lucide-react";
 import { headerConfig } from "@/lib/config/header";
+import Link from "next/link";
+import Image from "next/image";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -875,7 +877,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({ items, socialItems }) => 
           <ul className="list-none m-0 p-0 flex flex-col gap-4 sm-panel-list justify-center flex-1" role="list" data-numbering>
             {items.map((it, idx) => (
               <li className="relative overflow-hidden leading-none" key={it.label + idx}>
-                <a className="relative text-slate-900 dark:text-white font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl cursor-pointer leading-none tracking-tight uppercase transition-colors hover:text-blue-600 dark:hover:text-blue-400 inline-block pr-[1.4em] sm-panel-item" href={it.href} aria-label={it.ariaLabel} onClick={toggleMenu} data-index={idx + 1}>
+                <a className="relative text-slate-900 dark:text-white font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl cursor-pointer leading-none tracking-tight uppercase transition-colors hover:text-blue-600 dark:hover:text-blue-400 inline-block pr-[1.4em] sm-panel-item" href={it.href} aria-label={it.label} onClick={toggleMenu} data-index={idx + 1}>
                   <span className="sm-panel-itemLabel inline-block">{it.label}</span>
                 </a>
               </li>
@@ -911,10 +913,9 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({ items, socialItems }) => 
   );
 };
 
-export function Header() {
+export function Header({ config = headerConfig }: { config?: typeof headerConfig }) {
   const [pathname, setPathname] = useState("#home");
   const [isMounted, setIsMounted] = useState(false);
-  const config = headerConfig;
 
   useEffect(() => {
     setIsMounted(true);
@@ -928,15 +929,15 @@ export function Header() {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 p-2 sm:p-4">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-md bg-white/70 p-2 pl-4 pr-2 shadow-lg shadow-slate-900/5 backdrop-blur-xl border border-white/20 dark:bg-slate-900/70 dark:border-slate-800">
-        <a href="/" className="group flex flex-shrink-0 items-center gap-3 z-50">
+        <Link href="/" className="group flex flex-shrink-0 items-center gap-3 z-50">
           <div className="relative bg-white dark:bg-slate-800 rounded-lg p-1.5 shadow-sm">
-            <img src={config.brand.icon} alt={config.brand.title} width={28} height={28} className="object-contain" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+            <Image src={config.brand.icon} alt={config.brand.title} width={28} height={28} className="object-contain" />
           </div>
           <div className="flex flex-col">
             <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">{config.brand.title}</span>
             <span className="text-sm text-slate-900 dark:text-white">{config.brand.subtitle}</span>
           </div>
-        </a>
+        </Link>
         <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block">
           <LayoutGroup>
             <ul className="flex items-center gap-1">
@@ -945,7 +946,7 @@ export function Header() {
                 return (
                   <li key={item.href} className="relative" onClick={() => setPathname(item.href)}>
                     <a href={item.href} className={cn("relative flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300", isActive ? "text-slate-900 dark:text-white" : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white")}>{item.label}</a>
-                    {isActive && <motion.div layoutId="active-nav-indicator" className="absolute inset-0 -z-10 rounded-full bg-slate-200/70 dark:bg-slate-800" transition={{ type: "tween", ease: [0.25, 1, 0.5, 1], duration: 0.4 }} />}
+                    {isActive && <motion.div layoutId="active-nav-indicator" className="absolute inset-0 -z-10 rounded-full bg-slate-200/70 dark:bg-slate-800" transition={{ type: "tween", ease: [0.25, 1, 0.5, 1] as unknown as any, duration: 0.4 }} />}
                   </li>
                 );
               })}
