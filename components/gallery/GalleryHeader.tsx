@@ -38,11 +38,11 @@ function TextEffect({ children, as = "p", className, delay = 0 }: TextEffectProp
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15, skewY: 5 },
-    visible: {
+      visible: {
       opacity: 1,
       y: 0,
       skewY: 0,
-      transition: { duration: 0.5, ease: [0.25, 1, 0.5, 1] },
+      transition: { duration: 0.5, ease: [0.25, 1, 0.5, 1] as unknown as any },
     },
   };
 
@@ -98,10 +98,10 @@ export default function GalleryHeader({ searchQuery, onSearchChange }: GalleryHe
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
+      visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as unknown as any },
     },
   };
 

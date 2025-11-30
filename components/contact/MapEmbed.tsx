@@ -22,7 +22,7 @@ const MapEmbed: React.FC<MapEmbedProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ 
         duration: 0.5,
-        ease: [0.43, 0.13, 0.23, 0.96] 
+        ease: [0.43, 0.13, 0.23, 0.96] as unknown as any
       }}
       whileHover={{ 
         y: -5,
